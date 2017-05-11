@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>K5</title>
+</head>
+<body>
+    <h1>Enter new word</h1>
+    <form action="" method="post" id="word_add" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <label for="word">Enter word</label>
+        {{ form.word }}
+        <label for="audio_file">Pronunciation file</label>
+        {{ form.audio_file }}
+        <input type="submit" value="Submit">
+    </form>
+    <a href="show">See all words</a>
+</body>
+</html>

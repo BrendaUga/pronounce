@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>K5</title>
+</head>
+<body>
+    {% for word in words %}
+        <p> {{ word.word }} - {{ word.filename }}</p>
+    {% endfor %}
+</body>
+</html>
