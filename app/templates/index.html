@@ -33,7 +33,7 @@
                 <hr>
                 <div class="field">
                     <p class="control">
-                        <button class="button is-success is-outlined is-inverted is-medium"
+                        <button class="button is-info is-outlined is-inverted is-medium"
                                 ng-click="wordController.save()">
                             Add word
                         </button>
@@ -45,22 +45,24 @@
 
     <div class="hero-body" ng-if="wordController.page === 'search'">
         <div class="container has-text-centered">
-            <h1 class="title">
-                Search words
-            </h1>
-            <div class="form-container">
-                <form action="" method="post" id="search_form">
-                    <div class="field">
-                        <p class="control">
+            <div class="word-container">
+                <nav class="panel">
+                    <p class="panel-heading">All words</p>
+                    <div class="panel-block">
+                        <p class="control has-icons-left">
+                            <input class="input is-small" type="text" placeholder="Filter words" ng-model="wordController.searchText">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-search"></i>
+                            </span>
                         </p>
                     </div>
-                    <div class="field">
-                        <p class="control">
-                            <input type="submit" value="Search"
-                                   class="button is-hidden is-success is-outlined is-inverted is-medium">
-                        </p>
-                    </div>
-                </form>
+                    <p class="panel-block word-block" ng-repeat="word in wordController.words | filter:wordController.searchText">
+                        <span class="panel-icon" ng-click="wordController.playAudio(word.filename)">
+                            <i class="fa fa-play-circle"></i>
+                        </span>
+                        {$ word.word $}
+                    </p>
+                </nav>
             </div>
         </div>
     </div>

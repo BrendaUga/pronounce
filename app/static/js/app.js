@@ -13,6 +13,7 @@ app.controller('WordController', function ($scope, $http) {
     $self.word = '';
     $self.words = [];
     $self.error = '';
+    $self.searchText = '';
 
     $self.notification = {
         show: false,
@@ -46,6 +47,11 @@ app.controller('WordController', function ($scope, $http) {
         var files = document.getElementById('audio_file').files;
 
         $scope.upload(files);
+    };
+
+    $self.playAudio = function(filename) {
+        var audio = new Audio('files/' + filename);
+        audio.play();
     };
 
     $scope.$watch('wordController.word', function () {
