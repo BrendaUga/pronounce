@@ -7,6 +7,16 @@
                 Add a thingy
             </h1>
             <div class="form-container">
+
+                <article class="message is-danger" ng-if="wordController.error.length > 0">
+                    <div class="message-header">
+                        <p><strong>Error</strong>!</p>
+                    </div>
+                    <div class="message-body">
+                        {$ wordController.error $}
+                    </div>
+                </article>
+
                 <div class="field">
                     <label class="label is-medium" for="word">Enter word {$ word $}</label>
                     <p class="control">
@@ -19,10 +29,12 @@
                         <input type="file" name="audio_file" id="audio_file">
                     </p>
                 </div>
+
                 <hr>
                 <div class="field">
                     <p class="control">
-                        <button class="button is-success is-outlined is-inverted is-medium" ng-click="wordController.save()">
+                        <button class="button is-success is-outlined is-inverted is-medium"
+                                ng-click="wordController.save()">
                             Add word
                         </button>
                     </p>

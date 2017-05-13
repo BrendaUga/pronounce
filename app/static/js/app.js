@@ -12,20 +12,32 @@ app.controller('WordController', function ($scope, $http) {
     $self.page = 'add';
     $self.word = '';
     $self.words = [];
+    $self.error = '';
+
+    $self.notification = {
+        show: false,
+        message: 'Good shit',
+        type: 'success',
+    };
 
     $scope.upload = function (files) {
 
         var fd = new FormData();
         fd.append("audio_file", files[0]);
-        fd.append("word", this.word);
+        fd.append("word", $self.word);
 
         $http.post('/', fd, {
             withCredentials: true,
-            headers: { 'Content-Type': undefined },
-            transformRequest: angular.identity
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity,
         }).then(function (data) {
             if (data.data.success) {
-                // Show notification that all is good
+                $self.word = '';
+                $self.error = '';
+                $self.hideNotification();
+                $self.showNotification(data.data.message);
+            } else {
+                $self.error = data.data.message;
             }
         })
     };
@@ -41,7 +53,7 @@ app.controller('WordController', function ($scope, $http) {
         if ($self.wordExists($self.word)) {
 
             // Show notification
-            console.log('word exists')
+            $self.showNotification('This word already exists! It will be updated on save.', 'warning', false);
         }
     });
 
@@ -58,5 +70,32 @@ app.controller('WordController', function ($scope, $http) {
         return typeof $self.words.find(function (w) {
                 return w.word == word;
             }) !== 'undefined';
+    };
+
+    $self.showNotification = function (message, type, leave) {
+        $self.notification = {
+            show: true,
+            message: message,
+            type: typeof type === 'undefined' ? 'success' : type,
+        };
+
+        leave = typeof leave === 'undefined' ? true : leave;
+        if (leave) {
+            setTimeout(function () {
+                $self.notification = {
+                    show: false,
+                    message: '',
+                    type: type,
+                };
+            }, 5000)
+        }
+    };
+
+    $self.hideNotification = function () {
+        $self.notification = {
+            show: false,
+            message: '',
+            type: 'success',
+        };
     };
 });

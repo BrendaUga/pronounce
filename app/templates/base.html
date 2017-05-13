@@ -11,21 +11,29 @@
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </head>
 <body ng-controller="WordController as wordController">
-    <section class="hero is-success is-bold is-fullheight">
-        <div class="hero-head">
-            <div class="nav-center">
-                <a class="nav-item" ng-click="page = 'add'">
-                    Add word
-                </a>
-                <a class="nav-item" ng-click="page = 'search'">
-                    Search words
-                </a>
-            </div>
+<section class="hero is-info is-bold is-fullheight">
+    <div class="hero-head">
+        <div class="nav-center">
+            <a class="nav-item" ng-click="wordController.page = 'add'">
+                Add word
+            </a>
+            <a class="nav-item" ng-click="wordController.page = 'search'">
+                Search words
+            </a>
         </div>
+    </div>
 
-        {% block content %}
+    {% block content %}
 
-        {% endblock %}
-    </section>
+    {% endblock %}
+</section>
+
+<div class="notifications">
+    <div class="notification is-{$ wordController.notification.type $}" ng-if="wordController.notification.show">
+        <button class="delete" ng-click="wordController.hideNotification()"></button>
+        {$ wordController.notification.message $}
+    </div>
+</div>
+
 </body>
 </html>

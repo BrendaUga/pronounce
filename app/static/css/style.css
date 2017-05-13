@@ -10,3 +10,9 @@
     font-weight: 400;
     color: #fefefe;
 }
+
+.notifications {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}

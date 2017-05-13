@@ -19,29 +19,34 @@ def index():
     form = AddWordPronouncingForm()
     if request.method == 'POST':
 
-        if 'word' not in request.form:
-            return json.jsonify({"success": False, "error": "Word is needed"})
+        if 'word' not in request.form or len(request.form['word']) == 0:
+            return json.jsonify({"success": False, "message": "Word is needed"})
 
         if 'audio_file' not in request.files:
-            return json.jsonify({"success": False, "error": "Audio file must be uploaded"})
+            return json.jsonify({"success": False, "message": "Audio file must be uploaded"})
 
         file = request.files['audio_file']
         if file.filename == '':
-            return json.jsonify({"success": False, "error": "Audio file must be uploaded"})
+            return json.jsonify({"success": False, "message": "Audio file must be uploaded"})
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             word = request.form['word']
 
-            mongo.db.words.insert_one({'word': word, 'filename': filename})
+            if mongo.db.words.find_one({'word': word}):
+                mongo.db.words.update_one({'word': word}, {'$set': {
+                    'filename': filename
+                }})
+            else:
+                mongo.db.words.insert_one({'word': word, 'filename': filename})
+
             mongo.save_file(filename, file)
 
-            return json.jsonify({"success": True})
+            return json.jsonify({"success": True, "message": "Word saved!"})
 
-        return json.jsonify({"success": False, "error": "File must be mp3"})
+        return json.jsonify({"success": False, "message": "File must be mp3"})
 
     else:
-        print("method is get")
         return render_template('index.html', form=form)
 
 
