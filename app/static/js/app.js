@@ -1,4 +1,4 @@
-var app = angular.module('wordApp', []);
+var app = angular.module('wordApp', ['ngAnimate']);
 
 app.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{$');

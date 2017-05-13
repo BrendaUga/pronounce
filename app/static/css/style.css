@@ -16,3 +16,20 @@
     bottom: 20px;
     right: 20px;
 }
+
+.notification.ng-enter, .notification.ng-leave {
+    animation-duration: 0.8s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.notification.ng-enter,
+.notification.ng-leave.ng-leave-active {
+    opacity:0;
+    transform: translate3d(0, 100%, 0);
+}
+
+.notification.ng-leave,
+.notification.ng-enter.ng-enter-active {
+    opacity:1;
+    transform: translate3d(0, 0, 0);
+}
