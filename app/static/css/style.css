@@ -1,0 +1,12 @@
+.form-container {
+    width: 50%;
+    margin: 0 auto;
+    background-color: rgba(0,0,0,0.2);
+    padding: 25px;
+    text-align: left;
+}
+
+.label {
+    font-weight: 400;
+    color: #fefefe;
+}

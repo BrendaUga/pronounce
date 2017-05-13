@@ -7,3 +7,7 @@ from wtforms.validators import DataRequired
 class AddWordPronouncingForm(FlaskForm):
     word = StringField(label='word', validators=[DataRequired(message='Word is mandatory')])
     audio_file = FileField(label='audio', validators=[FileRequired(), FileAllowed(['mp3'], '.mp3 files only')])
+
+
+class SearchWordForm(FlaskForm):
+    keyword = StringField(label='keyword', validators=[DataRequired(message='Keyword is mandatory')])

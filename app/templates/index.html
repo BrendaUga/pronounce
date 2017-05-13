@@ -1,19 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>K5</title>
-</head>
-<body>
-    <h1>Enter new word</h1>
-    <form action="" method="post" id="word_add" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <label for="word">Enter word</label>
-        {{ form.word }}
-        <label for="audio_file">Pronunciation file</label>
-        {{ form.audio_file }}
-        <input type="submit" value="Submit">
-    </form>
-    <a href="show">See all words</a>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title">
+                Add new word with pronunciation
+            </h1>
+            <div class="form-container">
+                <form action="" method="post" id="add_form" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="field">
+                        <label class="label is-medium" for="word">Enter word</label>
+                        <p class="control">
+                            {{ form.word(class_="input is-medium") }}
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label is-medium" for="word">Add pronunciation audio (.mp3)</label>
+                        <p class="control">
+                            {{ form.audio_file }}
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <p class="control">
+                            <button class="button is-success is-outlined is-inverted is-medium">
+                              Add word
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

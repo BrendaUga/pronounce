@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_pymongo import PyMongo
-from forms import AddWordPronouncingForm
+from forms import AddWordPronouncingForm, SearchWordForm
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -22,25 +22,35 @@ def index():
             mongo.save_file(filename, file)
             return render_template('index.html', form=form)
         else:
-            print("error 1")
+            print("form not validated")
             return render_template('index.html', form=form)
     else:
         print("method is get")
         return render_template('index.html', form=form)
 
 
-@app.route('/show', methods=['GET'])
+@app.route('/show', methods=['GET', 'POST'])
 def show():
-    output = []
-    words = mongo.db.words.find()
-    for word in words:
-        output.append({'word': word['word'], 'filename': word['filename']})
-    return render_template('show.html', words=output)
+    form = SearchWordForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            keyword = form.keyword.data
+            output = []
+            words = mongo.db.words.find({'word': keyword})
+            for word in words:
+                output.append({'word': word['word'], 'filename': word['filename']})
+            return render_template('show.html', form=form, words=output)
+        else:
+            print("form not validated")
+            return render_template('show.html', form=form)
+    else:
+        print("method is get")
+        return render_template('show.html', form=form)
 
 
-@app.route('/get_file', methods=['GET'])
-def get_file():
-    return mongo.send_file('bell.mp3')
+@app.route('/get_file/<path:filename>', methods=['GET'])
+def get_file(filename):
+    return mongo.send_file(filename)
 
 
 if __name__ == "__main__":
