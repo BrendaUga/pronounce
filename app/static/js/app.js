@@ -17,7 +17,7 @@ app.controller('WordController', function ($scope, $http) {
 
     $self.notification = {
         show: false,
-        message: 'Good shit',
+        message: 'Good',
         type: 'success',
     };
 
@@ -112,4 +112,12 @@ app.controller('WordController', function ($scope, $http) {
             type: 'success',
         };
     };
+
+    $self.inputChanged = function (word) {
+        if ($self.wordExists(word)) {
+            $self.showNotification('This word already exists! It will be updated on save.', 'warning', false);
+        } else {
+            $self.hideNotification();
+        }
+    }
 });
