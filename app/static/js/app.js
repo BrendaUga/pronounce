@@ -1,4 +1,4 @@
-var app = angular.module('wordApp', ['ngAnimate']);
+var app = angular.module('wordApp', ['ngAnimate', 'angucomplete-alt']);
 
 app.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{$');
@@ -25,7 +25,11 @@ app.controller('WordController', function ($scope, $http) {
 
         var fd = new FormData();
         fd.append("audio_file", files[0]);
-        fd.append("word", $self.word);
+        if (typeof $self.word.originalObject.word !== 'undefined') {
+            fd.append("word", $self.word.originalObject.word);
+        } else {
+            fd.append("word", $self.word.originalObject);
+        }
 
         $http.post('/', fd, {
             withCredentials: true,
@@ -47,6 +51,7 @@ app.controller('WordController', function ($scope, $http) {
         var files = document.getElementById('audio_file').files;
 
         $scope.upload(files);
+        $self.getWords();
     };
 
     $self.playAudio = function(filename) {
@@ -55,10 +60,13 @@ app.controller('WordController', function ($scope, $http) {
     };
 
     $scope.$watch('wordController.word', function () {
-
-        if ($self.wordExists($self.word)) {
-
-            // Show notification
+        var checkValue;
+        if (typeof $self.word.originalObject.word !== 'undefined') {
+            checkValue = $self.word.originalObject.word;
+        } else {
+            checkValue = $self.word.originalObject
+        }
+        if ($self.wordExists(checkValue)) {
             $self.showNotification('This word already exists! It will be updated on save.', 'warning', false);
         }
     });

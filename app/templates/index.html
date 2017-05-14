@@ -18,9 +18,19 @@
                 </article>
 
                 <div class="field">
-                    <label class="label is-medium" for="word">Enter word {$ word $}</label>
+                    <label class="label is-medium" for="word">Enter word</label>
                     <p class="control">
-                        <input class="input is-medium" type="text" name="word" id="word" ng-model="wordController.word">
+{#                        <input class="input is-medium" type="text" name="word" id="word" ng-model="wordController.word">#}
+                        <angucomplete-alt id="word-select"
+                            placeholder="Enter word"
+                            pause="100"
+                            selected-object="wordController.word"
+                            local-data="wordController.words"
+                            search-fields="word"
+                            title-field="word"
+                            minlength="1"
+                            input-class="input is-medium"
+                            override-suggestions="true"/>
                     </p>
                 </div>
                 <div class="field">

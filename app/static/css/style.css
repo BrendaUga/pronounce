@@ -82,3 +82,31 @@
     top: 0;
     height: 50px;
 }
+
+#word-select input {
+    border-radius: 3px 3px 0 0;
+}
+
+.angucomplete-dropdown {
+    background-color: rgb(38, 92, 174);
+    z-index: 2;
+    position: fixed;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-top: none;
+    width: 622px;
+    border-radius: 0 0 2px 2px;
+}
+
+.angucomplete-row {
+    padding: 5px 10px;
+    clear: both;
+}
+
+.angucomplete-row:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.angucomplete-row:not(:last-of-type) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
