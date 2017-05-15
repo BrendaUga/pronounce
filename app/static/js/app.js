@@ -5,12 +5,15 @@ app.config(function ($interpolateProvider) {
     $interpolateProvider.endSymbol('$}');
 });
 
+var kana = null;
+
 app.controller('WordController', function ($scope, $http) {
 
     var $self = this;
+    kana = $self;
 
     $self.page = 'add';
-    $self.word = '';
+    $self.word = {'originalObject': ''};
     $self.words = [];
     $self.error = '';
     $self.searchText = '';
@@ -25,6 +28,7 @@ app.controller('WordController', function ($scope, $http) {
 
         var fd = new FormData();
         fd.append("audio_file", files[0]);
+        console.log($self.word);
         if (typeof $self.word.originalObject.word !== 'undefined') {
             fd.append("word", $self.word.originalObject.word);
         } else {
@@ -37,9 +41,10 @@ app.controller('WordController', function ($scope, $http) {
             transformRequest: angular.identity,
         }).then(function (data) {
             if (data.data.success) {
-                $self.word = '';
+                // $self.word = {'originalObject': ''};
                 $self.error = '';
                 $self.hideNotification();
+
                 $self.showNotification(data.data.message);
             } else {
                 $self.error = data.data.message;
@@ -94,26 +99,29 @@ app.controller('WordController', function ($scope, $http) {
         };
 
         leave = typeof leave === 'undefined' ? true : leave;
+
+        console.log(leave);
+
         if (leave) {
             setTimeout(function () {
-                $self.notification = {
-                    show: false,
-                    message: '',
-                    type: type,
-                };
-            }, 5000)
+                $self.hideNotification();
+            }, 3000)
         }
     };
 
     $self.hideNotification = function () {
+        console.log("hiding now 1", $self.notification);
         $self.notification = {
             show: false,
             message: '',
             type: 'success',
         };
+        console.log("hiding now 2", $self.notification);
     };
 
     $self.inputChanged = function (word) {
+        $self.word = {'originalObject': word};
+
         if ($self.wordExists(word)) {
             $self.showNotification('This word already exists! It will be updated on save.', 'warning', false);
         } else {

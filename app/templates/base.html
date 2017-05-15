@@ -32,7 +32,7 @@
 </section>
 
 <div class="notifications">
-    <div class="notification is-{$ wordController.notification.type $}" ng-if="wordController.notification.show">
+    <div class="notification is-{$ wordController.notification.type $}" ng-if="wordController.notification.show == true">
         <button class="delete" ng-click="wordController.hideNotification()"></button>
         {$ wordController.notification.message $}
     </div>

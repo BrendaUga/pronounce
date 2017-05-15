@@ -76,7 +76,7 @@ def get_file(filename):
 
 @app.route('/words')
 def words():
-    cursor = mongo.db.words.find()
+    cursor = mongo.db.words.find().sort('word', 1)
     word_list = []
     for object in cursor:
         word_list.append({'word': object['word'], 'filename': object['filename']})

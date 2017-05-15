@@ -97,7 +97,7 @@
     border-radius: 0 0 2px 2px;
 }
 
-.angucomplete-row {
+.angucomplete-row, .angucomplete-searching {
     padding: 5px 10px;
     clear: both;
 }
