@@ -28,7 +28,6 @@ app.controller('WordController', function ($scope, $http) {
 
         var fd = new FormData();
         fd.append("audio_file", files[0]);
-        console.log($self.word);
         if (typeof $self.word.originalObject.word !== 'undefined') {
             fd.append("word", $self.word.originalObject.word);
         } else {
@@ -100,8 +99,6 @@ app.controller('WordController', function ($scope, $http) {
 
         leave = typeof leave === 'undefined' ? true : leave;
 
-        console.log(leave);
-
         if (leave) {
             setTimeout(function () {
                 $self.hideNotification();
@@ -110,13 +107,11 @@ app.controller('WordController', function ($scope, $http) {
     };
 
     $self.hideNotification = function () {
-        console.log("hiding now 1", $self.notification);
         $self.notification = {
             show: false,
             message: '',
             type: 'success',
         };
-        console.log("hiding now 2", $self.notification);
     };
 
     $self.inputChanged = function (word) {

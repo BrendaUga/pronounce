@@ -16,7 +16,6 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    form = AddWordPronouncingForm()
     if request.method == 'POST':
 
         if 'word' not in request.form or len(request.form['word']) == 0:
@@ -47,26 +46,7 @@ def index():
         return json.jsonify({"success": False, "message": "File must be mp3"})
 
     else:
-        return render_template('index.html', form=form)
-
-
-@app.route('/show', methods=['GET', 'POST'])
-def show():
-    form = SearchWordForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            keyword = form.keyword.data
-            output = []
-            words = mongo.db.words.find({'word': keyword})
-            for word in words:
-                output.append({'word': word['word'], 'filename': word['filename']})
-            return render_template('show.html', form=form, words=output)
-        else:
-            print("form not validated")
-            return render_template('show.html', form=form)
-    else:
-        print("method is get")
-        return render_template('show.html', form=form)
+        return render_template('index.html')
 
 
 @app.route('/files/<path:filename>', methods=['GET'])
